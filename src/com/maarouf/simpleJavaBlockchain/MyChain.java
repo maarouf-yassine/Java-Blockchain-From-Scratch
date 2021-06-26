@@ -1,16 +1,23 @@
 package com.maarouf.simpleJavaBlockchain;
 
+import java.util.ArrayList;
+
+import com.google.gson.GsonBuilder;
+
 public class MyChain {
+	
+	public static ArrayList<Block> blockchain = new ArrayList<Block>();
+	
 	
 	public static void main(String[] args) {
 	
-		Block genesisBlock = new Block("0","Hello, I'm the first block");
-		System.out.println("Hash for block 1: "+genesisBlock.hash);
+		blockchain.add(new Block("0","Hello, I'm the first block"));
 		
-		Block secondBlock = new Block(genesisBlock.hash,"Hello, I'm the second block");
-		System.out.println("Hash for block 2: "+secondBlock.hash);
+		blockchain.add(new Block(blockchain.get(blockchain.size()-1).hash,"Hello, I'm the second block"));
 		
-		Block thirdBlock = new Block(secondBlock.hash,"Hello, I'm the first block");
-		System.out.println("Hash for block 3: "+thirdBlock.hash);
+		blockchain.add(new Block(blockchain.get(blockchain.size()-1).hash,"Hello, I'm the first block"));
+		
+		String blockChainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
+		System.out.println(blockChainJson);
 	}	
 }
